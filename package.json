@@ -1,0 +1,23 @@
+{
+  "name": "ringback",
+  "version": "1.0.0",
+  "description": "A simple class to manage callbacks.",
+  "main": "ringback.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flomei/ringback.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flomei/ringback/issues"
+  },
+  "homepage": "https://github.com/flomei/ringback#readme",
+  "keywords": [
+    "callbacks",
+    "observer"
+  ],
+  "author": "Florian Meinicke <npm@florianmeinicke.com>",
+  "license": "MIT"
+}
