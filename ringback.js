@@ -5,13 +5,16 @@ class Ringback {
         this.eventCallbacks = {};
     }
 
-    subscribe(eventName, callback) {
+    subscribe(eventName, callback, preventMultipleSubscriptions = true) {
         if (typeof eventName !== 'string' || typeof callback !== 'function') {
             return;
         }
         let callbackArray;
         if (!this.eventCallbacks.hasOwnProperty(eventName)) {
             this.eventCallbacks[eventName] = [];
+        }
+        if (preventMultipleSubscriptions && this.eventCallbacks[eventName].includes(callback)) {
+            return;
         }
         callbackArray = this.eventCallbacks[eventName];
         callbackArray.push(callback);
