@@ -6,6 +6,9 @@ class Ringback {
     }
 
     subscribe(eventName, callback) {
+        if (typeof eventName !== 'string' || typeof callback !== 'function') {
+            return;
+        }
         let callbackArray;
         if (!this.eventCallbacks.hasOwnProperty(eventName)) {
             this.eventCallbacks[eventName] = [];
