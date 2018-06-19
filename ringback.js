@@ -6,8 +6,11 @@ class Ringback {
     }
 
     subscribe(eventName, callback, preventMultipleSubscriptions = true) {
-        if (typeof eventName !== 'string' || typeof callback !== 'function') {
-            return;
+        if (typeof eventName !== 'string') {
+            throw 'eventName needs to be a string';
+        }
+        if (typeof callback !== 'function') {
+            throw 'callback needs to be a function';
         }
         if (!this.eventCallbacks.hasOwnProperty(eventName)) {
             this.eventCallbacks[eventName] = [];
@@ -20,6 +23,12 @@ class Ringback {
     }
 
     unsubscribe(eventName, callback) {
+        if (typeof eventName !== 'string') {
+            throw 'eventName needs to be a string';
+        }
+        if (typeof callback !== 'function') {
+            throw 'callback needs to be a function';
+        }
         let callbackIndex;
         if (!this.eventCallbacks.hasOwnProperty(eventName)) {
             return;
@@ -31,6 +40,9 @@ class Ringback {
     }
 
     publish(eventName, ...callbackArguments) {
+        if (typeof eventName !== 'string') {
+            throw 'eventName needs to be a string';
+        }
         if (!this.eventCallbacks.hasOwnProperty(eventName)) {
             return;
         }
