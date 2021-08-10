@@ -1,6 +1,6 @@
 {
   "name": "ringback",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A simple class to manage callbacks.",
   "main": "ringback.js",
   "scripts": {
