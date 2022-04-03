@@ -15,23 +15,22 @@ class Ringback {
         callbackArray.push(callback);
     }
     unsubscribe(eventName, callback) {
-        let callbackIndex;
-        if (!this.eventCallbacks.hasOwnProperty(eventName)) {
+        if (!this.eventCallbacks[eventName]) {
             return;
         }
+        let callbackIndex;
         const callbackArray = this.eventCallbacks[eventName];
         while ((callbackIndex = callbackArray.indexOf(callback)) !== -1) {
             callbackArray.splice(callbackIndex, 1);
         }
     }
     publish(eventName, ...callbackArguments) {
-        if (!this.eventCallbacks.hasOwnProperty(eventName)) {
-            return;
-        }
-        this.eventCallbacks[eventName].forEach(callback => callback(...callbackArguments));
+        var _a;
+        (_a = this.eventCallbacks[eventName]) === null || _a === void 0 ? void 0 : _a.forEach(callback => callback(...callbackArguments));
     }
     clearAll() {
-        this.eventCallbacks = {};
+        const keys = Object.keys(this.eventCallbacks);
+        keys.forEach((key) => delete this.eventCallbacks[key]);
     }
 }
 exports.default = Ringback;

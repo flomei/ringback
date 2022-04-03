@@ -1,15 +1,21 @@
 'use strict';
 
-export type Callback = (...args: any) => {};
+type EventArgsMap = Record<string, any[]>;
 
-class Ringback {
-  eventCallbacks: Record<string, Callback[]>;
+type CallbacksMap<M extends EventArgsMap> = {
+  [Properties in keyof M]: Callback<M, Properties>[]
+}
 
-  constructor() {
-    this.eventCallbacks = {};
-  }
+export type Callback<T extends EventArgsMap, EventName extends keyof T> = (...args: T[EventName]) => void;
 
-  subscribe(eventName: string, callback: Callback, preventMultipleSubscriptions = true) {
+class Ringback<EventArgs extends EventArgsMap> {
+  eventCallbacks: CallbacksMap<EventArgs> = {} as CallbacksMap<EventArgs> ;
+
+  subscribe<EventName extends keyof EventArgs>(
+    eventName: EventName,
+    callback: Callback<EventArgs, EventName>,
+    preventMultipleSubscriptions = true
+  ) {
     if (!this.eventCallbacks[eventName]) {
       this.eventCallbacks[eventName] = [];
     }
@@ -20,26 +26,30 @@ class Ringback {
     callbackArray.push(callback);
   }
 
-  unsubscribe(eventName: string, callback: Callback) {
-    let callbackIndex;
+  unsubscribe<EventName extends keyof EventArgs>(
+    eventName: EventName,
+    callback: Callback<EventArgs, EventName>,
+  ) {
     if (!this.eventCallbacks[eventName]) {
       return;
     }
+    let callbackIndex;
     const callbackArray = this.eventCallbacks[eventName];
     while ((callbackIndex = callbackArray.indexOf(callback)) !== -1) {
       callbackArray.splice(callbackIndex, 1);
     }
   }
 
-  publish(eventName: string, ...callbackArguments: any[]) {
-    if (!this.eventCallbacks[eventName]) {
-      return;
-    }
-    this.eventCallbacks[eventName].forEach(callback => callback(...callbackArguments));
+  publish<EventName extends keyof EventArgs>(
+    eventName: EventName,
+    ...callbackArguments: EventArgs[EventName]
+  ) {
+    this.eventCallbacks[eventName]?.forEach(callback => callback(...callbackArguments));
   }
 
   clearAll() {
-    this.eventCallbacks = {};
+    const keys = Object.keys(this.eventCallbacks);
+    keys.forEach((key) => delete this.eventCallbacks[key]);
   }
 }
 
