@@ -1,4 +1,4 @@
-# Ringback – a lightweight event dispatcher
+# Ringback – a lightweight typed event dispatcher
 
 ## Functionality
 
@@ -17,11 +17,11 @@ npm install ringback
 This package exposes one default class. Import it accordingly.
 
 CommonJS:
-```javascript
+```typescript
 const Ringback = require('ringback');
 ```
 ES6+:
-```javascript
+```typescript
 import Ringback from 'ringback';
 ```
 
@@ -53,6 +53,27 @@ Calls all callbacks for a certain events with an arbitrary amount of arguments.
 #### clearAll()
 
 Removes all callbacks and essentially resets the whole instance to its original state.
+
+### Typing
+
+If you're using TypeScript, you can optionally pass a type to the `Ringback` constructor that describes *all* events and
+their associated arguments passed to the callbacks.
+
+```typescript
+const rb = new Ringback<{
+  foo: [string, number],
+  bar: [string[], 'some' | 'thing'],
+  whoop: [],
+}>();
+
+rb.subscribe('foo', (a: string, b: number) => { /* ... */ });
+rb.subscribe('bar', (a: string[], b: 'some' | 'thing') => { /* ... */ });
+rb.subscribe('whoop', () => { /* ... */ });
+
+rb.publish('foo', 'bar', 42);
+rb.publish('bar', ['la', 'le', 'lu'], 'some');
+rb.publish('whoop');
+````
 
 ### Examples
 
