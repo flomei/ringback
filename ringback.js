@@ -1,57 +1,36 @@
 'use strict';
-
+Object.defineProperty(exports, "__esModule", { value: true });
 class Ringback {
-  constructor() {
-    this.eventCallbacks = {};
-  }
-
-  subscribe(eventName, callback, preventMultipleSubscriptions = true) {
-    if (typeof eventName !== 'string') {
-      throw 'eventName needs to be a string';
+    constructor() {
+        this.eventCallbacks = {};
     }
-    if (typeof callback !== 'function') {
-      throw 'callback needs to be a function';
+    subscribe(eventName, callback, preventMultipleSubscriptions = true) {
+        if (!this.eventCallbacks[eventName]) {
+            this.eventCallbacks[eventName] = [];
+        }
+        const callbackArray = this.eventCallbacks[eventName];
+        if (preventMultipleSubscriptions && callbackArray.includes(callback)) {
+            return;
+        }
+        callbackArray.push(callback);
     }
-    if (!this.eventCallbacks.hasOwnProperty(eventName)) {
-      this.eventCallbacks[eventName] = [];
+    unsubscribe(eventName, callback) {
+        if (!this.eventCallbacks[eventName]) {
+            return;
+        }
+        let callbackIndex;
+        const callbackArray = this.eventCallbacks[eventName];
+        while ((callbackIndex = callbackArray.indexOf(callback)) !== -1) {
+            callbackArray.splice(callbackIndex, 1);
+        }
     }
-    const callbackArray = this.eventCallbacks[eventName];
-    if (preventMultipleSubscriptions && callbackArray.includes(callback)) {
-      return;
+    publish(eventName, ...callbackArguments) {
+        var _a;
+        (_a = this.eventCallbacks[eventName]) === null || _a === void 0 ? void 0 : _a.forEach(callback => callback(...callbackArguments));
     }
-    callbackArray.push(callback);
-  }
-
-  unsubscribe(eventName, callback) {
-    if (typeof eventName !== 'string') {
-      throw 'eventName needs to be a string';
+    clearAll() {
+        const keys = Object.keys(this.eventCallbacks);
+        keys.forEach((key) => delete this.eventCallbacks[key]);
     }
-    if (typeof callback !== 'function') {
-      throw 'callback needs to be a function';
-    }
-    let callbackIndex;
-    if (!this.eventCallbacks.hasOwnProperty(eventName)) {
-      return;
-    }
-    const callbackArray = this.eventCallbacks[eventName];
-    while ((callbackIndex = callbackArray.indexOf(callback)) !== -1) {
-      callbackArray.splice(callbackIndex, 1);
-    }
-  }
-
-  publish(eventName, ...callbackArguments) {
-    if (typeof eventName !== 'string') {
-      throw 'eventName needs to be a string';
-    }
-    if (!this.eventCallbacks.hasOwnProperty(eventName)) {
-      return;
-    }
-    this.eventCallbacks[eventName].forEach(callback => callback(...callbackArguments));
-  }
-
-  clearAll() {
-    this.eventCallbacks = {};
-  }
 }
-
-module.exports = Ringback;
+exports.default = Ringback;
