@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
     "declaration": true,
     "baseUrl": ".",
     "outDir": ".",
     "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "lib": ["es2021", "dom", "es5"]
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "lib": ["es2021", "dom", "dom.iterable"]
   },
-  "include": [
-    "./src/*.ts"
-  ],
-  "exclude": [
-    "./src/*.test.ts"
-  ]
+  "include": ["./src/*.ts"],
+  "exclude": ["./src/*.test.ts"]
 }
