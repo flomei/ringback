@@ -8,7 +8,7 @@
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "release": "npm run build && changesets version"
+    "release": "npm run build && npx changesets version"
   },
   "repository": {
     "type": "git",
