@@ -1,5 +1,6 @@
 .idea/
 node_modules/
 coverage/
+dist/
 ringback.js
 ringback.d.ts

@@ -2,12 +2,13 @@
   "name": "ringback",
   "version": "2.1.1",
   "description": "A simple class to manage callbacks.",
-  "main": "ringback.js",
-  "types": "ringback.d.ts",
+  "main": "dist/ringback.js",
+  "module": "dist/ringback.mjs",
+  "types": "dist/ringback.d.ts",
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "build": "tsc",
+    "build": "tsup src/ringback.ts --format cjs,esm --dts",
     "release": "npm run build && changeset publish"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
+    "tsup": "^8.0.1",
     "typescript": "^4.6.2"
   }
 }
