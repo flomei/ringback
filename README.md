@@ -19,17 +19,22 @@ npm install ringback
 
 ## Usage
 
-This package exposes one default class. Import it accordingly.
+This package exposes one named class `Ringback`. It is also the default export.  
+it accordingly.
 
 CommonJS:
 
 ```typescript
+const { Ringback } = require("ringback");
+// or
 const Ringback = require("ringback");
 ```
 
-ES6+:
+ESM:
 
 ```typescript
+import { Ringback } from "ringback";
+// or
 import Ringback from "ringback";
 ```
 
@@ -97,7 +102,7 @@ rb.publish("whoop");
 #### Call callbacks with arguments
 
 ```javascript
-import Ringback from "ringback";
+import { Ringback } from "ringback";
 
 const dispatcher = new Ringback();
 
