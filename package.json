@@ -8,7 +8,7 @@
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
-    "build": "tsup src/ringback.ts --format cjs,esm --dts",
+    "build": "tsup src/ringback.ts --format cjs,esm --dts && npx fix-tsup-cjs",
     "release": "npm run build && changeset publish"
   },
   "repository": {
@@ -30,6 +30,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@changesets/cli": "^2.27.1",
     "@types/jest": "^27.4.1",
+    "fix-tsup-cjs": "^1.2.0",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
