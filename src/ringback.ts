@@ -1,20 +1,22 @@
-'use strict';
+"use strict";
 
 type EventArgsMap = Record<string, any[]>;
 
 type CallbacksMap<M extends EventArgsMap> = {
-  [Properties in keyof M]: Callback<M, Properties>[]
-}
+  [Properties in keyof M]: Callback<M, Properties>[];
+};
 
-export type Callback<T extends EventArgsMap, EventName extends keyof T> = (...args: T[EventName]) => void;
+export type Callback<T extends EventArgsMap, EventName extends keyof T> = (
+  ...args: T[EventName]
+) => void;
 
 class Ringback<EventArgs extends EventArgsMap> {
-  eventCallbacks: CallbacksMap<EventArgs> = {} as CallbacksMap<EventArgs> ;
+  eventCallbacks: CallbacksMap<EventArgs> = {} as CallbacksMap<EventArgs>;
 
   subscribe<EventName extends keyof EventArgs>(
     eventName: EventName,
     callback: Callback<EventArgs, EventName>,
-    preventMultipleSubscriptions = true
+    preventMultipleSubscriptions = true,
   ) {
     if (!this.eventCallbacks[eventName]) {
       this.eventCallbacks[eventName] = [];
@@ -33,7 +35,7 @@ class Ringback<EventArgs extends EventArgsMap> {
     if (!this.eventCallbacks[eventName]) {
       return;
     }
-    let callbackIndex;
+    let callbackIndex: number;
     const callbackArray = this.eventCallbacks[eventName];
     while ((callbackIndex = callbackArray.indexOf(callback)) !== -1) {
       callbackArray.splice(callbackIndex, 1);
@@ -44,7 +46,9 @@ class Ringback<EventArgs extends EventArgsMap> {
     eventName: EventName,
     ...callbackArguments: EventArgs[EventName]
   ) {
-    this.eventCallbacks[eventName]?.forEach(callback => callback(...callbackArguments));
+    this.eventCallbacks[eventName]?.forEach((callback) =>
+      callback(...callbackArguments),
+    );
   }
 
   clearAll() {
