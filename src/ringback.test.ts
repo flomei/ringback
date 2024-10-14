@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import Ringback from "./ringback";
 import { Ringback as NamedRingback } from "./ringback";
 
@@ -12,7 +13,7 @@ describe("Ringback", () => {
 
   it("should handle subscriptions", () => {
     const rb = new Ringback();
-    const spy = jest.fn();
+    const spy = vi.fn();
     rb.subscribe("foo", spy);
     rb.publish("foo");
     expect(spy).toHaveBeenCalled();
@@ -20,7 +21,7 @@ describe("Ringback", () => {
 
   it("should handle subscriptions with custom arguments", () => {
     const rb = new Ringback<{ foo: [string, number] }>();
-    const spy = jest.fn();
+    const spy = vi.fn();
     rb.subscribe("foo", spy);
     rb.publish("foo", "bar", 42);
     expect(spy).toHaveBeenCalledWith("bar", 42);
@@ -28,7 +29,7 @@ describe("Ringback", () => {
 
   it("should not allow multiple subscriptions if not configured so", () => {
     const rb = new Ringback();
-    const spy = jest.fn();
+    const spy = vi.fn();
     rb.subscribe("foo", spy);
     rb.subscribe("foo", spy);
     rb.publish("foo", "bar", 42);
@@ -38,7 +39,7 @@ describe("Ringback", () => {
 
   it("should allow multiple subscriptions if configured so", () => {
     const rb = new Ringback();
-    const spy = jest.fn();
+    const spy = vi.fn();
     rb.subscribe("foo", spy, false);
     rb.subscribe("foo", spy, false);
     rb.publish("foo", "bar", 42);
@@ -48,7 +49,7 @@ describe("Ringback", () => {
 
   it("should correctly unsubscribe", () => {
     const rb = new Ringback();
-    const spy = jest.fn();
+    const spy = vi.fn();
     rb.subscribe("foo", spy);
     rb.publish("foo");
     expect(spy).toHaveBeenCalledTimes(1);
@@ -59,7 +60,7 @@ describe("Ringback", () => {
 
   it("should handle non-existent event on unsubscribe", () => {
     const rb = new Ringback();
-    const spy = jest.fn();
+    const spy = vi.fn();
     rb.unsubscribe("WOOT", spy);
   });
 
@@ -70,9 +71,9 @@ describe("Ringback", () => {
 
   it("should be able to clear all callbacks", () => {
     const rb = new Ringback();
-    const spy = jest.fn();
-    const spy2 = jest.fn();
-    const spy3 = jest.fn();
+    const spy = vi.fn();
+    const spy2 = vi.fn();
+    const spy3 = vi.fn();
     rb.subscribe("foo", spy);
     rb.subscribe("foo", spy, false);
     rb.subscribe("bar", spy);
