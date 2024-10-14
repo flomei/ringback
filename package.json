@@ -5,6 +5,7 @@
   "main": "dist/ringback.js",
   "module": "dist/ringback.mjs",
   "types": "dist/ringback.d.ts",
+  "type": "module",
   "scripts": {
     "test": "jest",
     "typecheck": "tsc --noEmit",
