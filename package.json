@@ -1,6 +1,6 @@
 {
   "name": "ringback",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A simple class to manage callbacks.",
   "main": "dist/ringback.js",
   "module": "dist/ringback.mjs",
